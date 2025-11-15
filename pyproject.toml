@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "borax-cli"
+version = "0.1.0"
+description = "Borax — Book Organizer and Research Article arXiver"
+authors = ["Mykhailo Shevchuk <mail+dev@mshevchuk.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+  { include = "borax", format = ["sdist"] }
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+
+[tool.poetry.scripts]
+borax-cli = "borax.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
