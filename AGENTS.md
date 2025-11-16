@@ -169,6 +169,25 @@ You **must not**:
 
 ---
 
+## Versioning Policy
+
+Borax follows Semantic Versioning 2.0.0 starting with version 0.1.0.
+
+- MAJOR: Incompatible changes to CLI behavior, library file formats, manifest/vocab schemas, or removal/replacement of core tools (ExifTool, pdftotext) that break existing usage.
+- MINOR: Backward-compatible feature additions and improvements (e.g., new CLI commands, optional outputs, heuristics, or modules) that do not break existing workflows.
+- PATCH: Backward-compatible bug fixes, small robustness/perf tweaks, and documentation-only updates.
+
+Pre-releases use `-alpha.N`, `-beta.N`, or `-rc.N` when appropriate. Build metadata (`+...`) is not required.
+
+Release hygiene:
+- Update `pyproject.toml` `[tool.poetry].version` to the new version.
+- Update CHANGELOG (if present) and annotate changes by type (Added/Changed/Fixed).
+- Create a Git tag `vX.Y.Z` matching the released version.
+
+Note: Version 0.y.z may include changes; strive to minimize breakage even before 1.0.0. Any intentional breaking change still requires a MAJOR bump per SemVer.
+
+---
+
 ## Output Format Expectations
 
 When Codex produces code:
