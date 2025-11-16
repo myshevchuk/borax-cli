@@ -14,6 +14,22 @@ This document describes the test layout, how to run tests, gating markers for en
 
 Integration tests invoke the local CLI via `main.py` and use fixtures under `tests/data/library`.
 
+### Generating/Refreshing PDF fixtures
+
+These PDFs can be regenerated with valid xref tables using ReportLab.
+
+- Add dev dependency (Poetry):
+  - `poetry add --group dev reportlab`
+- Generate (or overwrite) fixtures:
+  - `poetry run python tests/tools/generate_fixtures.py --out tests/data/library --force`
+
+This produces readable A4 PDFs with standard metadata fields set (Title, Author, Subject, Keywords). It does not require network or external tools.
+
+Alternatively, use the Makefile targets:
+
+- `make fixtures` — generate (skip existing)
+- `make fixtures-force` — force-regenerate all fixtures
+
 ## Directory Structure
 
 - `tests/integration/` — black‑box CLI tests

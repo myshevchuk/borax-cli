@@ -123,6 +123,19 @@ See `tests/README.md` for detailed structure, gating markers (planned), and per�
 
 ---
 
+## Development
+
+Common tasks via Makefile (Poetry‑backed):
+
+- Generate test PDF fixtures (skip existing):
+  - `make fixtures`
+- Force‑regenerate all fixtures:
+  - `make fixtures-force`
+- Run tests:
+  - `make test`
+
+---
+
 ## Roadmap / TODO
 
 High-level roadmap highlights:

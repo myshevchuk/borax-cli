@@ -7,7 +7,20 @@ Semantic Versioning 2.0.0.
 
 ## [Unreleased]
 
-- Placeholder for upcoming changes.
+### Added
+- ReportLab-based PDF fixture generator (`tests/tools/generate_fixtures.py`) to create valid A4 PDFs with proper xref and metadata.
+- Makefile targets: `fixtures`, `fixtures-force`, and `test` (Poetry-backed).
+- tests/README.md describing structure, running instructions, markers plan, and per-test descriptions.
+- Richer readable fixtures: added `doc4.pdf` (DOI in metadata) and `doc5.pdf` (ISBN/publisher), aligned with A4/Helvetica.
+- Dev dependency: `reportlab` under Poetry dev group.
+
+### Changed
+- Flattened test data under `tests/data/library`; updated integration conftest paths.
+- README: Testing section links to tests/README.md; added Development section with Makefile commands.
+- Existing fixture PDFs rewritten for readability (A4, Helvetica).
+
+### Removed
+- Obsolete `tests/data/integration` and unused `tests/data/unit` fixtures.
 
 ## [0.3.0] - 2025-11-16
 

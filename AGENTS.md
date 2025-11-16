@@ -137,6 +137,7 @@ The manifest `borax-library.json` tells Borax where to find:
    - Keep using ExifTool for metadata and `pdftotext` for text extraction.
    - Keep using `requests` for HTTP (DOI/ISBN).
    - Avoid adding heavy dependencies without explicit permission.
+   - Dependency management: Use Poetry only. When adding any runtime or dev dependency, update `pyproject.toml` accordingly (under `[tool.poetry.dependencies]` or `[tool.poetry.group.dev.dependencies]`) and reflect changes in README/CHANGELOG when user‑facing.
 
 5. **Error handling and robustness are encouraged.**
    - It is acceptable (and desired) to add better error messages, handling of missing tools, etc., as long as behavior is backward-compatible.
@@ -149,6 +150,20 @@ The manifest `borax-library.json` tells Borax where to find:
 
 8. **Keep README current.**
    - When changes alter user-facing behavior (CLI flags, file formats/locations, tagging behavior, dependencies), update `README.md` to reflect the new reality.
+   - Do not instruct users to install dependencies with `pip`; prefer Poetry commands (e.g., `poetry add`, `poetry install`, `poetry run`).
+   - When adding or changing tests or fixtures, update `tests/README.md` to reflect structure, new cases, and any new tooling/markers.
+
+9. **Commit message conventions.**
+   - Prepare commit messages ready to copy/paste — do not include literal headings like "Title" or "Body".
+   - Keep the first line (subject) concise, imperative, and no more than 50
+     characters.
+   - Wrap body lines at 72 characters (the body may span multiple wrapped lines).
+   - Follow with a blank line and a short body with bullet points when helpful.
+   - When a bullet point wraps, indent subsequent lines by two spaces to
+     preserve readability, e.g.:
+     - This is a long bullet that wraps to the next line and the wrapped
+       line is indented by two spaces.
+   - When updating process or policy (e.g., this AGENTS.md), mention that change explicitly in the commit body.
 
 ---
 
@@ -187,6 +202,7 @@ Borax follows Semantic Versioning 2.0.0 starting with version 0.1.0.
 - PATCH: Backward-compatible bug fixes, small robustness/perf tweaks, and documentation-only updates.
 
 Pre-releases use `-alpha.N`, `-beta.N`, or `-rc.N` when appropriate. Build metadata (`+...`) is not required.
+Additionally, simple numeric pre-release tags of the form `x.y.z-N` are permitted (e.g., `0.3.0-1`) to denote internal pre-release iterations.
 
 Release hygiene:
 - Update `pyproject.toml` `[tool.poetry].version` to the new version.
