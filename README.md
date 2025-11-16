@@ -119,7 +119,7 @@ Run the test suite from the project root:
 pytest -q
 ```
 
-Integration tests invoke the local CLI via `main.py` and use fixtures under `tests/data/integration/library`.
+See `tests/README.md` for detailed structure, gating markers (planned), and per‑test descriptions. Integration fixtures live under `tests/data/library`.
 
 ---
 
@@ -147,11 +147,13 @@ High-level roadmap highlights:
 - [ ] Collision detection and suffix strategy for keys
 - [ ] Field sanitization/escaping
 - [ ] Export CSL-JSON / JSON metadata index
+- [ ] Add richer fixtures covering multiple authors and varied publishers
 
 ### Metadata Enrichment
 - [ ] Detect DOIs/ISBNs in PDF text (regex)
 - [ ] Caching for lookups
 - [ ] Enrichment-only CLI pass
+- [ ] Network-gated tests for DOI/ISBN enrichment using real, resolvable IDs (with mock fallback when offline)
 
 ### History Tracking
 - [ ] `history --json <library>` output
@@ -165,6 +167,8 @@ High-level roadmap highlights:
 
 ### Testing
 - [ ] Add unit tests and mocks for external tools
+- [ ] Snapshot-style CLI output tests for key commands
+- [ ] Expand readable PDF fixtures (authors, publishers, identifiers) to improve coverage
 
 ### Future Extensions
 - [ ] Optional SQLite backend
