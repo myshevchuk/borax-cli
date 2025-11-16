@@ -7,8 +7,10 @@ truth for CLI behavior across Poetry's console script and direct invocation.
 
 from borax.cli import main as cli_main
 
+
 def main():
     cli_main()
+
 
 if __name__ == "__main__":
     main()

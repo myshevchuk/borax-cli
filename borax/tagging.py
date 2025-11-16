@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """Tagging engine for Borax (discipline-agnostic)."""
+
 import os
 import subprocess
 from difflib import get_close_matches
 from pathlib import Path
 
 from .utils import exiftool_write_keywords, exiftool_read_json
-from .history_tracker import load_history, save_history, already_processed, record_original, update_modified_checksum
+from .history_tracker import (
+    load_history,
+    save_history,
+    already_processed,
+    record_original,
+    update_modified_checksum,
+)
 
-MIN_OCCURRENCES = 3
+MIN_OCCURRENCES = 1
 TITLE_WEIGHT = 2.0
 MIN_SCORE = 2.0
+
 
 def load_vocab_flat(vocab: dict):
     discipline_terms = set()
@@ -28,11 +36,13 @@ def load_vocab_flat(vocab: dict):
             keywords.add(kw.lower())
     return discipline_terms, doc_types, levels, keywords
 
+
 def get_macos_tags(filepath: Path):
     try:
         result = subprocess.run(
             ["mdls", "-name", "kMDItemUserTags", str(filepath)],
-            capture_output=True, text=True
+            capture_output=True,
+            text=True,
         )
         line = result.stdout.strip()
         if "=" in line:
@@ -43,6 +53,7 @@ def get_macos_tags(filepath: Path):
         pass
     return []
 
+
 def match_vocab_terms(folder_parts, vocab_terms):
     matched = []
     for part in folder_parts:
@@ -52,13 +63,17 @@ def match_vocab_terms(folder_parts, vocab_terms):
             matched.append(match[0])
     return matched
 
+
 def validate_finder_tags(finder_tags, valid_doc_types, valid_levels):
     doc_tags = [t for t in finder_tags if t in valid_doc_types]
     level_tags = [t for t in finder_tags if t in valid_levels]
-    invalid = [t for t in finder_tags if t not in valid_doc_types and t not in valid_levels]
+    invalid = [
+        t for t in finder_tags if t not in valid_doc_types and t not in valid_levels
+    ]
     if invalid:
         print(f"⚠️ Ignored unrecognized Finder tags: {', '.join(invalid)}")
     return doc_tags, level_tags
+
 
 def extract_text_from_pdf(filepath: Path) -> str:
     try:
@@ -66,7 +81,7 @@ def extract_text_from_pdf(filepath: Path) -> str:
         subprocess.run(
             ["pdftotext", "-layout", str(filepath), temp_txt],
             stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stderr=subprocess.DEVNULL,
         )
         with open(temp_txt, "r", errors="ignore") as f:
             text = f.read().lower()
@@ -75,8 +90,15 @@ def extract_text_from_pdf(filepath: Path) -> str:
     except Exception:
         return ""
 
+
 def score_keywords_in_text(text: str, keyword_list):
+    """Score keywords by frequency with a title/first-page boost.
+
+    Returns a sorted list of (keyword, score) with keywords in lowercase
+    (matching input), ordered by descending score.
+    """
     import re
+
     matches = []
     title_text = text[:2000]
     for kw in keyword_list:
@@ -87,13 +109,18 @@ def score_keywords_in_text(text: str, keyword_list):
             if kw in title_text:
                 score += TITLE_WEIGHT
         if score >= MIN_SCORE:
-            matches.append((kw.title(), score))
+            matches.append((kw, score))
     return sorted(matches, key=lambda x: x[1], reverse=True)
 
-def tag_with_exiftool(filepath: Path, tags, dry_run: bool = False, mode: str = "append"):
+
+def tag_with_exiftool(
+    filepath: Path, tags, dry_run: bool = False, mode: str = "append"
+):
     tags = [t for t in tags if t]
     if not tags and mode == "append":
-        # Nothing to add; leave existing untouched
+        # Nothing to add; still show preview in dry-run
+        if dry_run:
+            print(f"🧪 [Dry Run] Would tag {filepath.name} with: (no change)")
         return []
     # Build the final tag list based on mode while avoiding duplicates
     final_tags = list(dict.fromkeys(tags))
@@ -116,6 +143,7 @@ def tag_with_exiftool(filepath: Path, tags, dry_run: bool = False, mode: str = "
     exiftool_write_keywords(str(filepath), final_tags, preserve_time=True)
     return final_tags
 
+
 def scan_library(root: Path, history_path: Path, vocab: dict, verbose: bool = False):
     _, _, _, _ = load_vocab_flat(vocab)
     history = load_history(history_path)
@@ -129,15 +157,27 @@ def scan_library(root: Path, history_path: Path, vocab: dict, verbose: bool = Fa
             if not already_processed(p, history):
                 stats["unprocessed"].append(str(p))
     if verbose:
-        print(f"Found {stats['pdf_count']} PDFs; {len(stats['unprocessed'])} unprocessed.")
+        print(
+            f"Found {stats['pdf_count']} PDFs; {len(stats['unprocessed'])} unprocessed."
+        )
     return stats
 
-def tag_library(root: Path, history_path: Path, vocab: dict, override: bool = False, dry_run: bool = False, tag_mode: str = "append"):
+
+def tag_library(
+    root: Path,
+    history_path: Path,
+    vocab: dict,
+    override: bool = False,
+    dry_run: bool = False,
+    tag_mode: str = "append",
+):
     discipline_terms, doc_types, levels, keywords = load_vocab_flat(vocab)
     history = load_history(history_path)
 
     for dirpath, _, files in os.walk(root):
-        folder_parts = Path(dirpath).relative_to(root).parts if Path(dirpath) != root else []
+        folder_parts = (
+            Path(dirpath).relative_to(root).parts if Path(dirpath) != root else []
+        )
         discipline_tags = match_vocab_terms(folder_parts, discipline_terms)
 
         for fname in files:
@@ -158,11 +198,17 @@ def tag_library(root: Path, history_path: Path, vocab: dict, override: bool = Fa
             keyword_scores = score_keywords_in_text(text, keywords)
             keyword_tags = [kw for kw, sc in keyword_scores]
 
-            all_tags = list(dict.fromkeys(discipline_tags + doc_tags + level_tags + keyword_tags))
-            final_tags = tag_with_exiftool(filepath, all_tags, dry_run=dry_run, mode=tag_mode)
+            all_tags = list(
+                dict.fromkeys(discipline_tags + doc_tags + level_tags + keyword_tags)
+            )
+            final_tags = tag_with_exiftool(
+                filepath, all_tags, dry_run=dry_run, mode=tag_mode
+            )
 
             # If dry-run append might return [], preserve preview list
-            stored_tags = final_tags if isinstance(final_tags, list) and final_tags else all_tags
+            stored_tags = (
+                final_tags if isinstance(final_tags, list) and final_tags else all_tags
+            )
             history = update_modified_checksum(filepath, history, tags=stored_tags)
             print(f"📄 {filepath.name}")
             out = ", ".join(stored_tags)

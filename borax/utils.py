@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Utility helpers for Borax (Book Organizer and Research Article arXiver)."""
+
 import hashlib
 import subprocess
-import os
 import json
+
 
 def file_checksum(path):
     """Compute SHA-256 checksum of a file."""
@@ -13,10 +14,17 @@ def file_checksum(path):
             h.update(chunk)
     return h.hexdigest()
 
+
 def exiftool_read_json(path, *fields):
-    """Run exiftool and return parsed JSON for requested fields (single file)."""
+    """Run exiftool and return parsed JSON for requested fields (single file).
+
+    Returns an empty dict if exiftool is not available or on any error.
+    """
     cmd = ["exiftool", "-json"] + list(fields) + [path]
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True)
+    except FileNotFoundError:
+        return {}
     if res.returncode != 0:
         return {}
     try:
@@ -24,6 +32,7 @@ def exiftool_read_json(path, *fields):
         return data[0] if data else {}
     except Exception:
         return {}
+
 
 def exiftool_write_keywords(path, keywords, preserve_time=True):
     """Write keywords to XMP using `XMP-pdf:Keywords`.
@@ -35,7 +44,7 @@ def exiftool_write_keywords(path, keywords, preserve_time=True):
     # Normalize and de-duplicate while preserving order
     items = []
     seen = set()
-    for k in (keywords or []):
+    for k in keywords or []:
         if not k:
             continue
         if k in seen:

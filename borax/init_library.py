@@ -4,6 +4,7 @@
 Creates a library directory with a `borax-library.json` manifest and optional
 supporting files inside the target directory (vocab, history, bib).
 """
+
 from pathlib import Path
 import json
 
@@ -28,7 +29,9 @@ def run_init(target_path: str) -> None:
     root = Path(target_path).expanduser().resolve()
 
     if not root.exists():
-        create = _ask_yes_no(f"Directory {root} does not exist. Create it?", default=True)
+        create = _ask_yes_no(
+            f"Directory {root} does not exist. Create it?", default=True
+        )
         if not create:
             print("Aborted.")
             return
@@ -42,8 +45,12 @@ def run_init(target_path: str) -> None:
     bib_file = _ask("BibTeX filename", "library.bib")
     history_file = _ask("History filename", "tag_history.json")
 
-    create_vocab = _ask_yes_no("Create a library-specific vocab.json now?", default=False)
-    vocab_file = _ask("Vocabulary filename", "vocab.json") if create_vocab else "vocab.json"
+    create_vocab = _ask_yes_no(
+        "Create a library-specific vocab.json now?", default=False
+    )
+    vocab_file = (
+        _ask("Vocabulary filename", "vocab.json") if create_vocab else "vocab.json"
+    )
 
     # Write manifest
     manifest = {
@@ -53,7 +60,9 @@ def run_init(target_path: str) -> None:
         "history": history_file,
         "bib": bib_file,
     }
-    (root / "borax-library.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (root / "borax-library.json").write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
     # Create optional/required files in the library root
     bib_path = root / bib_file
@@ -71,9 +80,12 @@ def run_init(target_path: str) -> None:
                 "Document_Types": [],
                 "Levels": [],
                 "Disciplines": {},
-                "Keywords": {}
+                "Keywords": {},
             }
-            vocab_path.write_text(json.dumps(vocab_template, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            vocab_path.write_text(
+                json.dumps(vocab_template, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
 
     print("\n✅ Library initialized:")
     print(f"  Root:        {root}")
@@ -84,4 +96,3 @@ def run_init(target_path: str) -> None:
         print(f"  Vocabulary:  {(root / vocab_file)}")
     else:
         print("  Vocabulary:  (using project default; you can add one later)")
-

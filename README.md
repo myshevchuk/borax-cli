@@ -111,6 +111,18 @@ borax-cli bibtex /path/to/MyLibrary                  # export/update BibTeX
 
 ---
 
+## Testing
+
+Run the test suite from the project root:
+
+```bash
+pytest -q
+```
+
+Integration tests invoke the local CLI via `main.py` and use fixtures under `tests/data/integration/library`.
+
+---
+
 ## Roadmap / TODO
 
 High-level roadmap highlights:

@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Library configuration and manifest handling for Borax."""
+
 import json
 from dataclasses import dataclass
 from pathlib import Path
 
 MODULE_DIR = Path(__file__).resolve().parent
 DEFAULT_VOCAB_PATH = MODULE_DIR / "default_vocab.json"
+
 
 @dataclass
 class LibraryConfig:
@@ -17,16 +19,20 @@ class LibraryConfig:
     history_path: Path
     bib_path: Path
 
+
 def load_json(path: Path) -> dict:
     if not path.exists():
         return {}
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def merge_vocab(default: dict, custom: dict) -> dict:
     """Merge custom vocab into default vocab."""
     merged = {}
-    merged["Document_Types"] = sorted(set(default.get("Document_Types", []) + custom.get("Document_Types", [])))
+    merged["Document_Types"] = sorted(
+        set(default.get("Document_Types", []) + custom.get("Document_Types", []))
+    )
     merged["Levels"] = sorted(set(default.get("Levels", []) + custom.get("Levels", [])))
 
     merged_disc = {}
@@ -47,6 +53,7 @@ def merge_vocab(default: dict, custom: dict) -> dict:
         merged_kw[key] = sorted(set(d_list + c_list))
     merged["Keywords"] = merged_kw
     return merged
+
 
 def load_library_config(library_root: str) -> LibraryConfig:
     root = Path(library_root).expanduser().resolve()

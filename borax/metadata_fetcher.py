@@ -11,6 +11,7 @@ try:
 except Exception:  # ImportError or environments restricting imports
     requests = None  # type: ignore
 
+
 def fetch_from_doi(doi: str) -> dict:
     """Fetch metadata from CrossRef for a DOI. Returns dict or empty."""
     if not doi:
@@ -41,10 +42,11 @@ def fetch_from_doi(doi: str) -> dict:
             "author": ", ".join(authors),
             "year": year,
             "publisher": data.get("publisher", ""),
-            "doi": doi
+            "doi": doi,
         }
     except Exception:
         return {}
+
 
 def fetch_from_isbn(isbn: str) -> dict:
     """Fetch metadata from OpenLibrary for an ISBN. Returns dict or empty."""
@@ -53,7 +55,9 @@ def fetch_from_isbn(isbn: str) -> dict:
     if requests is None:
         # requests not installed — skip enrichment gracefully
         return {}
-    url = f"https://openlibrary.org/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=data"
+    url = (
+        f"https://openlibrary.org/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=data"
+    )
     try:
         r = requests.get(url, timeout=10)
         if r.status_code != 200:
@@ -67,7 +71,7 @@ def fetch_from_isbn(isbn: str) -> dict:
             "publisher": publisher,
             "year": data.get("publish_date", ""),
             "edition": data.get("edition_name", ""),
-            "isbn": isbn
+            "isbn": isbn,
         }
     except Exception:
         return {}

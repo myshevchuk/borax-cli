@@ -9,6 +9,19 @@ Semantic Versioning 2.0.0.
 
 - Placeholder for upcoming changes.
 
+## [0.3.0] - 2025-11-16
+
+### Added
+- Test suite: unit and integration tests with fixtures and local CLI runner.
+
+### Changed
+- CLI: clearer history summary output and BibTeX message wording ("entries added").
+- Tagging: keyword scoring returns lowercase keywords; minimum occurrences reduced to 1 (with title-weight boost) for better sensitivity.
+
+### Fixed
+- Robust ExifTool reads: gracefully handle missing `exiftool` in environments by returning empty metadata.
+- Test harness paths: updated integration/unit conftests to resolve project root and fixture directories reliably.
+
 ## [0.2.1] - 2025-11-16
 
 ### Documentation
@@ -36,7 +49,8 @@ Semantic Versioning 2.0.0.
 ### Documentation
 - Added Versioning Policy in `AGENTS.md` (SemVer 2.0.0) starting at 0.1.0.
 
-[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.3.0
 [0.2.1]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.1
 [0.2.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.0
 [0.1.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.1.0
