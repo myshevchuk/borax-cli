@@ -9,6 +9,18 @@ Semantic Versioning 2.0.0.
 
 - Placeholder for upcoming changes.
 
+## [0.2.0] - 2025-11-16
+
+### Added
+- Tagging modes to control behavior: overwrite vs append (default append).
+- CLI switches for tagging: `--overwrite-tags` and `--append-tags`.
+
+### Fixed
+- Prevent duplicate keywords when re-tagging; history now records the final de-duplicated tag set; dry-run previews final tags.
+
+### Changed
+- Tagging now writes keywords to XMP using `XMP-pdf:Keywords` with a semicolon delimiter, aligning with ExifTool XMP-pdf namespace guidance.
+
 ## [0.1.0] - 2025-11-16
 
 ### Added
@@ -19,5 +31,6 @@ Semantic Versioning 2.0.0.
 ### Documentation
 - Added Versioning Policy in `AGENTS.md` (SemVer 2.0.0) starting at 0.1.0.
 
-[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.0
 [0.1.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.1.0

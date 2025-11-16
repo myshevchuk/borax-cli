@@ -5,7 +5,7 @@ import subprocess
 from difflib import get_close_matches
 from pathlib import Path
 
-from .utils import exiftool_write_keywords
+from .utils import exiftool_write_keywords, exiftool_read_json
 from .history_tracker import load_history, save_history, already_processed, record_original, update_modified_checksum
 
 MIN_OCCURRENCES = 3
@@ -90,14 +90,31 @@ def score_keywords_in_text(text: str, keyword_list):
             matches.append((kw.title(), score))
     return sorted(matches, key=lambda x: x[1], reverse=True)
 
-def tag_with_exiftool(filepath: Path, tags, dry_run: bool = False):
+def tag_with_exiftool(filepath: Path, tags, dry_run: bool = False, mode: str = "append"):
     tags = [t for t in tags if t]
-    if not tags:
-        return
+    if not tags and mode == "append":
+        # Nothing to add; leave existing untouched
+        return []
+    # Build the final tag list based on mode while avoiding duplicates
+    final_tags = list(dict.fromkeys(tags))
+    if mode == "append":
+        # Read existing XMP-pdf:Keywords string and merge using semicolon delimiter
+        meta = exiftool_read_json(str(filepath), "-XMP-pdf:Keywords") or {}
+        existing_str = meta.get("XMP-pdf:Keywords")
+        if isinstance(existing_str, str) and existing_str.strip():
+            existing_list = [s.strip() for s in existing_str.split(";") if s.strip()]
+        else:
+            existing_list = []
+        seen = set(existing_list)
+        to_add = [t for t in final_tags if t not in seen]
+        final_tags = existing_list + to_add
     if dry_run:
-        print(f"🧪 [Dry Run] Would tag {filepath.name} with: {', '.join(tags)}")
-        return
-    exiftool_write_keywords(str(filepath), tags, preserve_time=True)
+        preview = ", ".join(final_tags) if final_tags else "(no change)"
+        print(f"🧪 [Dry Run] Would tag {filepath.name} with: {preview}")
+        return final_tags
+    # Use overwrite to set the exact final list (even in append mode, after merging)
+    exiftool_write_keywords(str(filepath), final_tags, preserve_time=True)
+    return final_tags
 
 def scan_library(root: Path, history_path: Path, vocab: dict, verbose: bool = False):
     _, _, _, _ = load_vocab_flat(vocab)
@@ -115,7 +132,7 @@ def scan_library(root: Path, history_path: Path, vocab: dict, verbose: bool = Fa
         print(f"Found {stats['pdf_count']} PDFs; {len(stats['unprocessed'])} unprocessed.")
     return stats
 
-def tag_library(root: Path, history_path: Path, vocab: dict, override: bool = False, dry_run: bool = False):
+def tag_library(root: Path, history_path: Path, vocab: dict, override: bool = False, dry_run: bool = False, tag_mode: str = "append"):
     discipline_terms, doc_types, levels, keywords = load_vocab_flat(vocab)
     history = load_history(history_path)
 
@@ -142,11 +159,14 @@ def tag_library(root: Path, history_path: Path, vocab: dict, override: bool = Fa
             keyword_tags = [kw for kw, sc in keyword_scores]
 
             all_tags = list(dict.fromkeys(discipline_tags + doc_tags + level_tags + keyword_tags))
-            tag_with_exiftool(filepath, all_tags, dry_run=dry_run)
+            final_tags = tag_with_exiftool(filepath, all_tags, dry_run=dry_run, mode=tag_mode)
 
-            history = update_modified_checksum(filepath, history, tags=all_tags)
+            # If dry-run append might return [], preserve preview list
+            stored_tags = final_tags if isinstance(final_tags, list) and final_tags else all_tags
+            history = update_modified_checksum(filepath, history, tags=stored_tags)
             print(f"📄 {filepath.name}")
-            print(f"   → {', '.join(all_tags)}")
+            out = ", ".join(stored_tags)
+            print(f"   → {out}")
 
     if not dry_run:
         save_history(history_path, history)

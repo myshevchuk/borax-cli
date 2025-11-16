@@ -32,10 +32,17 @@ def cmd_scan(library_path: str):
             print("  -", p)
 
 
-def cmd_tag(library_path: str, override: bool = False, dry_run: bool = False):
+def cmd_tag(library_path: str, override: bool = False, dry_run: bool = False, tag_mode: str = "append"):
     config = load_library_config(library_path)
     print(f"Tagging library: {config.name} at {config.root}")
-    tagging.tag_library(config.root, config.history_path, config.vocab, override=override, dry_run=dry_run)
+    tagging.tag_library(
+        config.root,
+        config.history_path,
+        config.vocab,
+        override=override,
+        dry_run=dry_run,
+        tag_mode=tag_mode,
+    )
 
 
 def cmd_bibtex(library_path: str):
@@ -59,6 +66,17 @@ def main():
     parser.add_argument("library", nargs="?", help="Path to library root or target dir for init")
     parser.add_argument("--override", action="store_true", help="Ignore history and reprocess all PDFs")
     parser.add_argument("--dry-run", action="store_true", help="Preview tagging changes without modifying files")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "--overwrite-tags",
+        action="store_true",
+        help="Replace existing PDF keywords with newly inferred tags",
+    )
+    group.add_argument(
+        "--append-tags",
+        action="store_true",
+        help="Append newly inferred tags to existing keywords (default)",
+    )
     args = parser.parse_args()
 
     if args.command in {"summary", "scan", "tag", "bibtex", "history", "init"} and not args.library:
@@ -71,7 +89,8 @@ def main():
     elif args.command == "scan":
         cmd_scan(args.library)
     elif args.command == "tag":
-        cmd_tag(args.library, override=args.override, dry_run=args.dry_run)
+        mode = "overwrite" if args.overwrite_tags else "append"
+        cmd_tag(args.library, override=args.override, dry_run=args.dry_run, tag_mode=mode)
     elif args.command == "bibtex":
         cmd_bibtex(args.library)
     elif args.command == "history":

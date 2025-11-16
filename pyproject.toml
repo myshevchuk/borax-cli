@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "borax-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = "Borax — Book Organizer and Research Article arXiver"
 authors = ["Mykhailo Shevchuk <mail+dev@mshevchuk.com>"]
 license = "MIT"

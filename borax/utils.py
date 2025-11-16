@@ -26,15 +26,33 @@ def exiftool_read_json(path, *fields):
         return {}
 
 def exiftool_write_keywords(path, keywords, preserve_time=True):
-    """Write keywords to a file using exiftool's Keywords tag.
+    """Write keywords to XMP using `XMP-pdf:Keywords`.
 
-    Uses -Keywords+= for each keyword. Optionally preserves file timestamps.
+    - Uses the XMP-pdf namespace as per ExifTool documentation.
+    - Joins values with a semicolon delimiter into a single `XMP-pdf:Keywords` string.
+    - Always overwrites the field to match the provided list; callers must merge for append behavior.
     """
-    if not keywords:
-        return
+    # Normalize and de-duplicate while preserving order
+    items = []
+    seen = set()
+    for k in (keywords or []):
+        if not k:
+            continue
+        if k in seen:
+            continue
+        seen.add(k)
+        items.append(k)
+
     cmd = ["exiftool"]
-    for k in keywords:
-        cmd.append(f"-Keywords+={k}")
+
+    # Build a single XMP-pdf:Keywords assignment using semicolon delimiter
+    if items:
+        joined = "; ".join(items)
+        cmd.append(f"-XMP-pdf:Keywords={joined}")
+    else:
+        # Clear field explicitly
+        cmd.append("-XMP-pdf:Keywords=")
+
     if preserve_time:
         cmd.append("-preserve")
     cmd += ["-overwrite_original", path]
