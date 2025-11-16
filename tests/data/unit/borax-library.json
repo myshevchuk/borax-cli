@@ -1,7 +1,0 @@
-{
-  "name": "Test Library (Minimal)",
-  "description": "Fixture library for borax-cli tests",
-  "vocab": "vocab.json",
-  "history": "tag_history.json",
-  "bib": "library.bib"
-}

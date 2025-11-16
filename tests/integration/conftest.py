@@ -13,7 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 @pytest.fixture
 def sample_library(tmp_path):
     """Copy the integration test library into a temp directory and return its path."""
-    fixture_root = PROJECT_ROOT / "tests/data/integration/library"
+    fixture_root = PROJECT_ROOT / "tests/data/library"
     lib = tmp_path / "library"
     shutil.copytree(fixture_root, lib)
     return lib
