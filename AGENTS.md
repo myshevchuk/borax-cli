@@ -141,6 +141,15 @@ The manifest `borax-library.json` tells Borax where to find:
 5. **Error handling and robustness are encouraged.**
    - It is acceptable (and desired) to add better error messages, handling of missing tools, etc., as long as behavior is backward-compatible.
 
+6. **Docstrings are mandatory.**
+   - Always add a clear, concise docstring when creating new functions (describe purpose, key args, return value, and side effects).
+
+7. **Keep docstrings up to date.**
+   - Whenever modifying a function’s behavior, parameters, or return type, update its docstring accordingly.
+
+8. **Keep README current.**
+   - When changes alter user-facing behavior (CLI flags, file formats/locations, tagging behavior, dependencies), update `README.md` to reflect the new reality.
+
 ---
 
 ## Allowed Operations

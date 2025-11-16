@@ -9,6 +9,11 @@ Semantic Versioning 2.0.0.
 
 - Placeholder for upcoming changes.
 
+## [0.2.1] - 2025-11-16
+
+### Documentation
+- Removed redundant `TODO.md`; README now contains the roadmap highlights.
+
 ## [0.2.0] - 2025-11-16
 
 ### Added
@@ -31,6 +36,7 @@ Semantic Versioning 2.0.0.
 ### Documentation
 - Added Versioning Policy in `AGENTS.md` (SemVer 2.0.0) starting at 0.1.0.
 
-[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.1
 [0.2.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.0
 [0.1.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.1.0
