@@ -1,101 +1,68 @@
-%PDF-1.4
-1 0 obj << /Type /Catalog /Pages 2 0 R /Metadata 6 0 R >>
+%PDF-1.3
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<<
+/F1 2 0 R
+>>
 endobj
-2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >>
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
 endobj
-3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << >> >>
+3 0 obj
+<<
+/Contents 7 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 6 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
 endobj
-4 0 obj << /Length 88 >>
+4 0 obj
+<<
+/PageMode /UseNone /Pages 6 0 R /Type /Catalog
+>>
+endobj
+5 0 obj
+<<
+/Author (Writer, I. S. B. N.) /CreationDate (D:20251119222354+01'00') /Creator (ReportLab PDF Library - www.reportlab.com) /Keywords (textbook; sample) /ModDate (D:20251119222354+01'00') /Producer (Example Press) 
+  /Subject (textbook; sample; ISBN 9781234567897) /Title (Sample Textbook) /Trapped /False
+>>
+endobj
+6 0 obj
+<<
+/Count 1 /Kids [ 3 0 R ] /Type /Pages
+>>
+endobj
+7 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 181
+>>
 stream
-BT
-/F1 12 Tf
-72 120 Td
-(Textbook sample: ISBN 9781234567897. Publisher: Example Press.) Tj
-ET
-endstream
-endobj
-5 0 obj << /Title (Sample Textbook) /Author (Writer, I. S. B. N.) /Subject (textbook; sample) /ISBN (9781234567897) /Producer (Example Press) >>
-endobj
-6 0 obj << /Type /Metadata /Subtype /XML /Length 520 >>
-stream
-<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-          xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <rdf:Description>
-   <dc:publisher>
-    <rdf:Seq>
-     <rdf:li>Example Press</rdf:li>
-    </rdf:Seq>
-   </dc:publisher>
-  </rdf:Description>
- </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>
-endstream
-endobj
-xref
-0 7
-0000000000 65535 f 
-0000000010 00000 n 
-0000000071 00000 n 
-0000000128 00000 n 
-0000000225 00000 n 
-0000000436 00000 n 
-0000000602 00000 n 
-trailer << /Size 7 /Root 1 0 R /Info 5 0 R >>
-startxref
-0000000000
-%%EOF
-%PDF-1.4
-1 0 obj << /Type /Catalog /Pages 2 0 R /Metadata 6 0 R >>
-endobj
-2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 7 0 R >> >> >>
-endobj
-4 0 obj << /Length 94 >>
-stream
-BT
-/F1 12 Tf
-72 120 Td
-(Textbook sample: ISBN 9781234567897. Publisher: Example Press.) Tj
-ET
-endstream
-endobj
-5 0 obj << /Title (Sample Textbook) /Author (Writer, I. S. B. N.) /Subject (textbook; sample) /ISBN (9781234567897) /Producer (Example Press) >>
-endobj
-6 0 obj << /Type /Metadata /Subtype /XML /Length 520 >>
-stream
-<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-          xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <rdf:Description>
-   <dc:publisher>
-    <rdf:Seq>
-     <rdf:li>Example Press</rdf:li>
-    </rdf:Seq>
-   </dc:publisher>
-  </rdf:Description>
- </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>
-endstream
-endobj
-7 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+Gas3,bmM<A&-Up<T43iG+hC8!,Wunm#U0HH"g"Npdnj`mqY3Ypl9Sui%KkT>@J)Z"o,*"0Z!7r5JfBde)SAM\ae,0]'1TiL:0?g53+0aT\CY#176H6-lgm.3!a^7O.8=Q`06V<SP#OKeN-.VfL.Y1EHIV=BSp[0**6+&<H6;/p8+Hd?"ZSF~>endstream
 endobj
 xref
 0 8
 0000000000 65535 f 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-trailer << /Size 8 /Root 1 0 R /Info 5 0 R >>
+0000000073 00000 n 
+0000000104 00000 n 
+0000000211 00000 n 
+0000000414 00000 n 
+0000000482 00000 n 
+0000000808 00000 n 
+0000000867 00000 n 
+trailer
+<<
+/ID 
+[<187e7190f85016e13ae0e86b34ccbe94><187e7190f85016e13ae0e86b34ccbe94>]
+% ReportLab generated PDF document -- digest (http://www.reportlab.com)
+
+/Info 5 0 R
+/Root 4 0 R
+/Size 8
+>>
 startxref
-0
+1138
 %%EOF

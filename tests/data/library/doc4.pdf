@@ -1,93 +1,68 @@
-%PDF-1.4
-1 0 obj << /Type /Catalog /Pages 2 0 R /Metadata 6 0 R >>
+%PDF-1.3
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<<
+/F1 2 0 R
+>>
 endobj
-2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >>
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
 endobj
-3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << >> >>
+3 0 obj
+<<
+/Contents 7 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 6 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
 endobj
-4 0 obj << /Length 80 >>
+4 0 obj
+<<
+/PageMode /UseNone /Pages 6 0 R /Type /Catalog
+>>
+endobj
+5 0 obj
+<<
+/Author (Author, D. O. I.) /CreationDate (D:20251119222354+01'00') /Creator (DOI 10.1000/xyz) /Keywords (methods; simulation) /ModDate (D:20251119222354+01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+  /Subject (methods; simulation; doi:10.1000/xyz) /Title (Research Article) /Trapped /False
+>>
+endobj
+6 0 obj
+<<
+/Count 1 /Kids [ 3 0 R ] /Type /Pages
+>>
+endobj
+7 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 184
+>>
 stream
-BT
-/F1 12 Tf
-72 120 Td
-(Research article: DOI 10.1000/xyz. Topic: methods, simulation.) Tj
-ET
-endstream
-endobj
-5 0 obj << /Title (Research Article) /Author (Author, D. O. I.) /Subject (methods; simulation; doi:10.1000/xyz) >>
-endobj
-6 0 obj << /Type /Metadata /Subtype /XML /Length 360 >>
-stream
-<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-          xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-  <rdf:Description>
-   <xmp:Identifier>10.1000/xyz</xmp:Identifier>
-  </rdf:Description>
- </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>
-endstream
-endobj
-xref
-0 7
-0000000000 65535 f 
-0000000010 00000 n 
-0000000071 00000 n 
-0000000128 00000 n 
-0000000225 00000 n 
-0000000410 00000 n 
-0000000538 00000 n 
-trailer << /Size 7 /Root 1 0 R /Info 5 0 R >>
-startxref
-0000000000
-%%EOF
-%PDF-1.4
-1 0 obj << /Type /Catalog /Pages 2 0 R /Metadata 6 0 R >>
-endobj
-2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 7 0 R >> >> >>
-endobj
-4 0 obj << /Length 94 >>
-stream
-BT
-/F1 12 Tf
-72 120 Td
-(Research article: DOI 10.1000/xyz. Topic: methods, simulation.) Tj
-ET
-endstream
-endobj
-5 0 obj << /Title (Research Article) /Author (Author, D. O. I.) /Subject (methods; simulation; doi:10.1000/xyz) >>
-endobj
-6 0 obj << /Type /Metadata /Subtype /XML /Length 360 >>
-stream
-<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-          xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-  <rdf:Description>
-   <xmp:Identifier>10.1000/xyz</xmp:Identifier>
-  </rdf:Description>
- </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>
-endstream
-endobj
-7 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+Gas3+5mkI_'Eld2:GGKW8b:\Odk4&m5nN*a+N0L6)C')&p%4+IFeLQEMh*eiq$asjG[S@Df*"^]'ds_5G`*;,Is--Fj9bC&+d=GjfOM:tS^jjAU"eFl`g1-(&Nom+Ai-aRD?H&RUm1EBFr.nnRLY4mfpNK0p2r?:;fp;l)Vr#EqE.%8!,;p&0`~>endstream
 endobj
 xref
 0 8
 0000000000 65535 f 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-0000000000 00000 n 
-trailer << /Size 8 /Root 1 0 R /Info 5 0 R >>
+0000000073 00000 n 
+0000000104 00000 n 
+0000000211 00000 n 
+0000000414 00000 n 
+0000000482 00000 n 
+0000000811 00000 n 
+0000000870 00000 n 
+trailer
+<<
+/ID 
+[<5a9054a701c403b63b68ff6e1df506d2><5a9054a701c403b63b68ff6e1df506d2>]
+% ReportLab generated PDF document -- digest (http://www.reportlab.com)
+
+/Info 5 0 R
+/Root 4 0 R
+/Size 8
+>>
 startxref
-0
+1144
 %%EOF
