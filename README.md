@@ -26,7 +26,7 @@ borax-cli/
     ├── history_tracker.py      # Per-library checksum history
     ├── utils.py                # ExifTool / checksum helpers
     ├── library_config.py       # Manifest and vocab loading/merging
-    └── default_vocab.json      # Discipline-agnostic defaults
+    └── default_vocab.yaml      # Discipline-agnostic defaults
 ```
 
 Libraries live outside the project. Each library root contains:
@@ -40,7 +40,7 @@ Libraries live outside the project. Each library root contains:
 └── PDFs...
 ```
 
-The manifest points Borax to the library-specific `vocab.yaml` (if any), and the paths for the history and BibTeX files. Library vocab (YAML) is merged with the default vocab at `borax/default_vocab.json`.
+The manifest points Borax to the library-specific `vocab.yaml` (if any), and the paths for the history and BibTeX files. Library vocab (YAML) is merged with the default vocab at `borax/default_vocab.yaml` (JSON also supported).
 
 ---
 

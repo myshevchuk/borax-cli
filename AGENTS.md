@@ -28,7 +28,7 @@ borax-cli/
     ├── history_tracker.py      # Per-library checksum history
     ├── utils.py                # ExifTool / checksum helpers
     ├── library_config.py       # Manifest and vocab loading/merging
-    └── default_vocab.json      # Discipline-agnostic defaults
+    └── default_vocab.yaml      # Discipline-agnostic defaults
 ```
 
 ### Libraries (external to project)
@@ -62,7 +62,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - PDFs themselves
 
 2. **Default vocabulary is discipline-agnostic.**
-   - Defined in `borax/default_vocab.json`.
+   - Defined in `borax/default_vocab.yaml`.
    - Provides generic disciplines, document types, levels, and keyword groups.
    - Is always present even if a library has no custom vocab.
 

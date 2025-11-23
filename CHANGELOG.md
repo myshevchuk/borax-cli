@@ -18,6 +18,9 @@ Semantic Versioning 2.0.0.
 - Test fixtures converted to TOML/YAML (`tests/data/library`).
 - README updated to document TOML/YAML formats and Python 3.11+
   recommendation (`tomllib`); note `tomli` for Python < 3.11.
+ - Init command now generates `borax-library.toml` and `vocab.yaml` by
+   default (replacing prior JSON output).
+ - Default vocabulary is now shipped as YAML (`borax/default_vocab.yaml`).
 
 ## [0.3.1] - 2025-11-19
 
@@ -40,6 +43,7 @@ Semantic Versioning 2.0.0.
 
 ### Removed
 - Obsolete `tests/data/integration` and unused `tests/data/unit` fixtures.
+ - `borax/default_vocab.json` (superseded by YAML default).
 
 ## [0.3.0] - 2025-11-16
 

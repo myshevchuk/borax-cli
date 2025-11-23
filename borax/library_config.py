@@ -22,7 +22,8 @@ except Exception:  # pragma: no cover
     yaml = None
 
 MODULE_DIR = Path(__file__).resolve().parent
-DEFAULT_VOCAB_PATH = MODULE_DIR / "default_vocab.json"
+DEFAULT_VOCAB_PATH_JSON = MODULE_DIR / "default_vocab.json"
+DEFAULT_VOCAB_PATH_YAML = MODULE_DIR / "default_vocab.yaml"
 
 
 @dataclass
@@ -114,7 +115,14 @@ def load_library_config(library_root: str) -> LibraryConfig:
     history_rel = manifest.get("history", "tag_history.json")
     bib_rel = manifest.get("bib", "library.bib")
 
-    default_vocab = load_json(DEFAULT_VOCAB_PATH)
+    # Load default vocab (prefer YAML if present)
+    default_vocab_path = (
+        DEFAULT_VOCAB_PATH_YAML if DEFAULT_VOCAB_PATH_YAML.exists() else DEFAULT_VOCAB_PATH_JSON
+    )
+    if default_vocab_path.suffix.lower() in {".yaml", ".yml"}:
+        default_vocab = load_yaml(default_vocab_path)
+    else:
+        default_vocab = load_json(default_vocab_path)
     custom_vocab_path = root / vocab_rel
     if custom_vocab_path.suffix.lower() in {".yaml", ".yml"}:
         custom_vocab = load_yaml(custom_vocab_path)
@@ -127,7 +135,7 @@ def load_library_config(library_root: str) -> LibraryConfig:
         name=name,
         description=description,
         vocab=merged_vocab,
-        vocab_path=custom_vocab_path if custom_vocab else DEFAULT_VOCAB_PATH,
+        vocab_path=custom_vocab_path if custom_vocab else default_vocab_path,
         history_path=root / history_rel,
         bib_path=root / bib_rel,
     )
