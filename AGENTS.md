@@ -37,14 +37,14 @@ Libraries live **outside** the project directory. Each library root contains:
 
 ```text
 /path/to/MyLibrary/
-├── borax-library.json      # Required manifest
-├── vocab.json              # Optional library-specific vocabulary
+├── borax-library.toml      # Required manifest (TOML)
+├── vocab.yaml              # Optional library-specific vocabulary (YAML)
 ├── library.bib             # BibTeX file (created/updated by Borax)
 ├── tag_history.json        # Processing history (created/updated by Borax)
 └── PDFs...
 ```
 
-The manifest `borax-library.json` tells Borax where to find:
+The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax where to find:
 
 - the library-specific vocabulary file (if any),
 - the history file to use,
@@ -56,7 +56,7 @@ The manifest `borax-library.json` tells Borax where to find:
 
 1. **Library-specific data stays in the library directory.**
    All of the following belong to the library root, not the project tree:
-   - `vocab.json`
+   - `vocab.yaml` (JSON also supported)
    - `library.bib`
    - `tag_history.json`
    - PDFs themselves

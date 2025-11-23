@@ -1,7 +1,0 @@
-{
-  "name": "Integration Test Library",
-  "description": "Library used for integration tests of borax-cli",
-  "vocab": "vocab.json",
-  "history": "tag_history.json",
-  "bib": "library.bib"
-}

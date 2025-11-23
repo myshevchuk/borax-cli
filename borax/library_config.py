@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
-"""Library configuration and manifest handling for Borax."""
+"""Library configuration and manifest handling for Borax.
+
+Supports library manifests in TOML (preferred) or JSON for backward
+compatibility, and library vocabularies in YAML (preferred) or JSON.
+"""
 
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
+
+# Prefer stdlib tomllib when available (Python >= 3.11), else fallback to tomli
+try:  # pragma: no cover
+    import tomllib  # type: ignore[attr-defined]
+except Exception:  # pragma: no cover
+    import tomli as tomllib  # type: ignore
+
+try:  # pragma: no cover
+    import yaml  # type: ignore
+except Exception:  # pragma: no cover
+    yaml = None
 
 MODULE_DIR = Path(__file__).resolve().parent
 DEFAULT_VOCAB_PATH = MODULE_DIR / "default_vocab.json"
@@ -55,22 +71,55 @@ def merge_vocab(default: dict, custom: dict) -> dict:
     return merged
 
 
+def load_toml(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    with open(path, "rb") as f:
+        return tomllib.load(f)
+
+
+def load_yaml(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    if yaml is None:
+        return {}
+    with open(path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    return data or {}
+
+
 def load_library_config(library_root: str) -> LibraryConfig:
     root = Path(library_root).expanduser().resolve()
-    manifest_path = root / "borax-library.json"
-    if not manifest_path.exists():
-        raise FileNotFoundError(f"No borax-library.json found in {root}")
-
-    manifest = load_json(manifest_path)
+    manifest_toml = root / "borax-library.toml"
+    manifest_json = root / "borax-library.json"
+    if manifest_toml.exists():
+        manifest = load_toml(manifest_toml)
+    elif manifest_json.exists():
+        manifest = load_json(manifest_json)
+    else:
+        raise FileNotFoundError(
+            f"No borax-library.toml or borax-library.json found in {root}"
+        )
     name = manifest.get("name", root.name)
     description = manifest.get("description", "")
-    vocab_rel = manifest.get("vocab", "vocab.json")
+    # Resolve vocab file (prefer YAML; accept JSON)
+    vocab_rel: Optional[str] = manifest.get("vocab")
+    if not vocab_rel:
+        if (root / "vocab.yaml").exists():
+            vocab_rel = "vocab.yaml"
+        elif (root / "vocab.yml").exists():
+            vocab_rel = "vocab.yml"
+        else:
+            vocab_rel = "vocab.json"
     history_rel = manifest.get("history", "tag_history.json")
     bib_rel = manifest.get("bib", "library.bib")
 
     default_vocab = load_json(DEFAULT_VOCAB_PATH)
     custom_vocab_path = root / vocab_rel
-    custom_vocab = load_json(custom_vocab_path) if custom_vocab_path.exists() else {}
+    if custom_vocab_path.suffix.lower() in {".yaml", ".yml"}:
+        custom_vocab = load_yaml(custom_vocab_path)
+    else:
+        custom_vocab = load_json(custom_vocab_path)
     merged_vocab = merge_vocab(default_vocab, custom_vocab)
 
     return LibraryConfig(

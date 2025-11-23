@@ -33,14 +33,14 @@ Libraries live outside the project. Each library root contains:
 
 ```text
 /path/to/MyLibrary/
-├── borax-library.json      # Required manifest
-├── vocab.json              # Optional library-specific vocabulary
+├── borax-library.toml      # Required manifest (TOML)
+├── vocab.yaml              # Optional library-specific vocabulary (YAML)
 ├── library.bib             # BibTeX file (created/updated by Borax)
 ├── tag_history.json        # Processing history (created/updated by Borax)
 └── PDFs...
 ```
 
-The manifest points Borax to the library-specific `vocab.json` (if any), and the paths for the history and BibTeX files. Library vocab is merged with the default vocab at `borax/default_vocab.json`.
+The manifest points Borax to the library-specific `vocab.yaml` (if any), and the paths for the history and BibTeX files. Library vocab (YAML) is merged with the default vocab at `borax/default_vocab.json`.
 
 ---
 
@@ -107,7 +107,13 @@ borax-cli bibtex /path/to/MyLibrary                  # export/update BibTeX
 - ExifTool (command-line `exiftool`)
 - Poppler (`pdftotext`)
 - macOS only: `mdls` for Finder tags
-- Python: `requests`
+- Python: `requests`, `PyYAML`
+
+Recommended Python version:
+- Python 3.11+ is recommended (bundles `tomllib` for TOML parsing).
+- For Python < 3.11, add `tomli` to your environment if you need TOML
+  parsing at runtime. With Poetry:
+  - `poetry add tomli`
 
 ---
 

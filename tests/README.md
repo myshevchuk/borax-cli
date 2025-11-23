@@ -71,8 +71,8 @@ Alternatively, use the Makefile targets:
 
 ## Test Data (tests/data/library)
 
-- `borax-library.json` — minimal manifest referencing `vocab.json`, `tag_history.json`, `library.bib`.
-- `vocab.json` — generic Chemistry vocabulary (disciplines, types, levels, keywords).
+- `borax-library.toml` — minimal manifest referencing `vocab.yaml`, `tag_history.json`, `library.bib`.
+- `vocab.yaml` — generic Chemistry vocabulary (disciplines, types, levels, keywords).
 - Readable PDFs (A4, Helvetica):
   - `doc1.pdf` — Organic chemistry; XMP `pdf:Keywords` = “organic; textbook”.
   - `doc2.pdf` — Inorganic notes; XMP `pdf:Keywords` = “inorganic; notes”.

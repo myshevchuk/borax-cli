@@ -12,6 +12,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.31.0"
+PyYAML = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0"

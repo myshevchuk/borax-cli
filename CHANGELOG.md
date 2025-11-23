@@ -7,7 +7,17 @@ Semantic Versioning 2.0.0.
 
 ## [Unreleased]
 
-- Placeholder for upcoming changes.
+### Added
+- Support for TOML library manifests (`borax-library.toml`) and YAML
+  vocabularies (`vocab.yaml`) with JSON maintained for compatibility.
+- Runtime dependency: `PyYAML` for YAML parsing.
+
+### Changed
+- Loader now prefers TOML for manifests and YAML for vocab; falls back to
+  JSON when those files are not present.
+- Test fixtures converted to TOML/YAML (`tests/data/library`).
+- README updated to document TOML/YAML formats and Python 3.11+
+  recommendation (`tomllib`); note `tomli` for Python < 3.11.
 
 ## [0.3.1] - 2025-11-19
 

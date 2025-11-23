@@ -1,0 +1,19 @@
+Disciplines:
+  Chemistry:
+    Subfields:
+      Organic:
+        - Synthesis
+      Inorganic: []
+Document_Types:
+  - Textbook
+  - Thesis
+Levels:
+  - Introductory
+  - Graduate
+Keywords:
+  Core Concepts:
+    - acid
+    - base
+  Metadata:
+    - index
+
