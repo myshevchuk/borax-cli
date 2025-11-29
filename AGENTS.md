@@ -171,6 +171,49 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
        line is indented by two spaces.
    - When updating process or policy (e.g., this AGENTS.md), mention that change explicitly in the commit body.
 
+10. **Pre-1.0.0 compatibility guidance.**
+    - Do not suggest or add backward-compatibility shims, adapters, or
+      migration guides prior to version 1.0.0.
+    - Do not propose or include documentation sections such as
+      "Migration Notes" until version 1.0.0.
+
+11. **Code phrase: "prepare a commit"**
+    - When asked to "prepare a commit", perform these steps:
+      1. Update the Changelog with all unreleased changes since the last tag.
+      2. Update the version number:
+         - If the previous tag is `vX.Y.Z`, increment the patch to `vX.Y.(Z+1)`
+           and add a prerelease number to form `vX.Y.(Z+1)-N` (start at `-1`).
+         - If the previous tag is `vX.Y.Z-N`, increment only the prerelease
+           number to `vX.Y.Z-(N+1)`.
+         - Write the new version into `pyproject.toml`.
+      3. Prepare a commit message ready to copy (no headings like "Subject" or
+         "Body"), summarizing the changes.
+
+12. **Code phrase: "prepare a feature"**
+    - Similar to "prepare a commit", but increase the feature (minor)
+      version instead of the patch version when starting a new prerelease.
+      Perform these steps:
+      1. Update the Changelog with all unreleased changes since the last tag.
+      2. Update the version number:
+         - If the previous tag is `vX.Y.Z`, bump to the next feature by
+           setting `vX.(Y+1).0-1`.
+         - If the previous tag is `vX.Y.Z-N`, increment only the prerelease
+           number to `vX.Y.Z-(N+1)`.
+         - Write the new version into `pyproject.toml`.
+      3. Prepare a commit message ready to copy (no headings like "Subject" or
+         "Body"), summarizing the changes.
+
+13. **Code phrase: "bump version"**
+    - When asked to "bump version", perform these steps:
+      1. Update the Changelog by moving all unreleased changes since the
+         previous release into a new release section. A release is any version
+         without a prerelease marker (i.e., it does not include `-N`).
+      2. Update the version number by dropping the prerelease marker from the
+         current prerelease version (e.g., `vX.Y.Z-N` → `vX.Y.Z`). Write the new
+         version into `pyproject.toml` and update changelog links accordingly.
+      3. Prepare a commit message ready to copy (no headings like "Subject" or
+         "Body"), summarizing the version bump and changes included.
+
 ---
 
 ## Allowed Operations

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "borax"
-version = "0.4.0"
+version = "0.4.1-1"
 description = "Borax — Book Organizer and Research Article arXiver"
 authors = ["Mykhailo Shevchuk <mail+dev@mshevchuk.com>"]
 license = "MIT"
