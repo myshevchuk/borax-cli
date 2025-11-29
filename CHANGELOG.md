@@ -7,6 +7,10 @@ Semantic Versioning 2.0.0.
 
 ## [Unreleased]
 
+_No changes yet._
+
+## [0.4.0] - 2025-11-29
+
 ### Added
 - Split project into subpackages:
   - `borax/core` (config, utils, history, init)
@@ -14,6 +18,8 @@ Semantic Versioning 2.0.0.
   - `borax/bibtex_exporter` (package)
 - Ship default vocabulary at `borax/core/data/default_vocab.yaml`.
 - Runtime dependency: `PyYAML` for YAML parsing.
+- Init scaffolder writes `borax-library.toml` and optional `vocab.yaml` in
+  the target library directory.
 
 ### Changed
 - Public API preserved via re-exports: `from borax import tagging,`
@@ -25,6 +31,7 @@ Semantic Versioning 2.0.0.
 - README and AGENTS updated to reflect new layout and default vocab path.
 - AGENTS: clarified commit message rules — do not include the literal words
   "Subject" or "Body" in suggested commit messages.
+ - Removed fallback search for default vocab in legacy locations.
 
 ### Removed
 - Legacy modules after package split:
@@ -100,7 +107,8 @@ Semantic Versioning 2.0.0.
 ### Documentation
 - Added Versioning Policy in `AGENTS.md` (SemVer 2.0.0) starting at 0.1.0.
 
-[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/myshevchuk/borax-cli/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.4.0
 [0.3.1]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.3.1
 [0.3.0]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.3.0
 [0.2.1]: https://github.com/myshevchuk/borax-cli/releases/tag/v0.2.1
