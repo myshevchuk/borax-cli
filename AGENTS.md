@@ -214,6 +214,16 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
       3. Prepare a commit message ready to copy (no headings like "Subject" or
          "Body"), summarizing the version bump and changes included.
 
+14. **Branch policy for code phrases**
+    - When working on any branch other than `main`, code phrases must not
+      alter the version (major/minor/patch) nor the prerelease number (`-N`).
+      Apply the following adjustments:
+      - Do not modify `pyproject.toml` version.
+      - Do not create or move Changelog entries into a new versioned release
+        section; update the `Unreleased` section only.
+      - Perform all other instructed steps (e.g., summarize changes, update
+        `Unreleased`, compose a copy‑ready commit message) as usual.
+
 ---
 
 ## Allowed Operations

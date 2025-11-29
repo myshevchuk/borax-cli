@@ -12,6 +12,8 @@ Semantic Versioning 2.0.0.
   feature, bump version); clarified pre‑1.0.0 guidance (no BC shims or
   migration notes) and commit message wording (avoid the words
   "Subject"/"Body").
+ - AGENTS: add branch policy for code phrases — on non-main branches, do not
+   change versions or prerelease numbers; update only the Unreleased section.
 
 ## [0.4.0] - 2025-11-29
 
