@@ -6,8 +6,8 @@ import subprocess
 from difflib import get_close_matches
 from pathlib import Path
 
-from .utils import exiftool_write_keywords, exiftool_read_json
-from .history_tracker import (
+from borax.core.utils import exiftool_write_keywords, exiftool_read_json
+from borax.core.history_tracker import (
     load_history,
     save_history,
     already_processed,
@@ -21,6 +21,7 @@ MIN_SCORE = 2.0
 
 
 def load_vocab_flat(vocab: dict):
+    """Flatten hierarchical vocab into term sets for matching/scoring."""
     discipline_terms = set()
     for disc, data in vocab.get("Disciplines", {}).items():
         discipline_terms.add(disc)
@@ -38,6 +39,7 @@ def load_vocab_flat(vocab: dict):
 
 
 def get_macos_tags(filepath: Path):
+    """Return Finder tags for a file on macOS, or empty list elsewhere."""
     try:
         result = subprocess.run(
             ["mdls", "-name", "kMDItemUserTags", str(filepath)],
@@ -55,6 +57,7 @@ def get_macos_tags(filepath: Path):
 
 
 def match_vocab_terms(folder_parts, vocab_terms):
+    """Fuzzy-match folder path parts to known vocabulary terms."""
     matched = []
     for part in folder_parts:
         normalized = part.replace("_", " ").title()
@@ -65,6 +68,7 @@ def match_vocab_terms(folder_parts, vocab_terms):
 
 
 def validate_finder_tags(finder_tags, valid_doc_types, valid_levels):
+    """Split Finder tags into document type and level; warn on unknowns."""
     doc_tags = [t for t in finder_tags if t in valid_doc_types]
     level_tags = [t for t in finder_tags if t in valid_levels]
     invalid = [
@@ -76,6 +80,7 @@ def validate_finder_tags(finder_tags, valid_doc_types, valid_levels):
 
 
 def extract_text_from_pdf(filepath: Path) -> str:
+    """Extract text using `pdftotext`; returns lowercase text or empty string."""
     try:
         temp_txt = str(filepath) + ".txt"
         subprocess.run(
@@ -116,6 +121,7 @@ def score_keywords_in_text(text: str, keyword_list):
 def tag_with_exiftool(
     filepath: Path, tags, dry_run: bool = False, mode: str = "append"
 ):
+    """Apply tags to the PDF using ExifTool, with append/overwrite modes."""
     tags = [t for t in tags if t]
     if not tags and mode == "append":
         # Nothing to add; still show preview in dry-run
@@ -145,6 +151,7 @@ def tag_with_exiftool(
 
 
 def scan_library(root: Path, history_path: Path, vocab: dict, verbose: bool = False):
+    """Walk the library and list unprocessed PDFs based on history."""
     _, _, _, _ = load_vocab_flat(vocab)
     history = load_history(history_path)
     stats = {"pdf_count": 0, "unprocessed": []}
@@ -171,6 +178,7 @@ def tag_library(
     dry_run: bool = False,
     tag_mode: str = "append",
 ):
+    """Infer and write tags for all PDFs in the library."""
     discipline_terms, doc_types, levels, keywords = load_vocab_flat(vocab)
     history = load_history(history_path)
 
@@ -218,3 +226,4 @@ def tag_library(
         save_history(history_path, history)
 
     print("\n✅ Tagging complete.")
+

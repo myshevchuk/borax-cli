@@ -11,6 +11,7 @@ import json
 
 
 def _ask(prompt: str, default: str | None = None) -> str:
+    """Prompt for a string value with an optional default."""
     suffix = f" [{default}]" if default is not None else ""
     val = input(f"{prompt}{suffix}: ").strip()
     if not val and default is not None:
@@ -19,6 +20,7 @@ def _ask(prompt: str, default: str | None = None) -> str:
 
 
 def _ask_yes_no(prompt: str, default: bool = True) -> bool:
+    """Prompt for a yes/no value with a default choice."""
     d = "Y/n" if default else "y/N"
     val = input(f"{prompt} [{d}]: ").strip().lower()
     if not val:
@@ -27,6 +29,7 @@ def _ask_yes_no(prompt: str, default: bool = True) -> bool:
 
 
 def run_init(target_path: str) -> None:
+    """Scaffold a new Borax library at the given target path."""
     root = Path(target_path).expanduser().resolve()
 
     if not root.exists():
@@ -53,8 +56,7 @@ def run_init(target_path: str) -> None:
         _ask("Vocabulary filename", "vocab.yaml") if create_vocab else "vocab.yaml"
     )
 
-    # Write manifest
-    # Write TOML manifest (no external dependency necessary for simple fields)
+    # Write manifest (TOML)
     toml_lines = [
         f"name = \"{name}\"",
         f"description = \"{description}\"",
@@ -100,3 +102,4 @@ def run_init(target_path: str) -> None:
         print(f"  Vocabulary:  {(root / vocab_file)}")
     else:
         print("  Vocabulary:  (using project default; you can add one later)")
+

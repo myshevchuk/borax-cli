@@ -3,6 +3,8 @@
 
 Supports library manifests in TOML (preferred) or JSON for backward
 compatibility, and library vocabularies in YAML (preferred) or JSON.
+
+Default vocabulary is loaded from `borax/core/data/default_vocab.yaml`.
 """
 
 import json
@@ -22,12 +24,24 @@ except Exception:  # pragma: no cover
     yaml = None
 
 MODULE_DIR = Path(__file__).resolve().parent
-DEFAULT_VOCAB_PATH_JSON = MODULE_DIR / "default_vocab.json"
-DEFAULT_VOCAB_PATH_YAML = MODULE_DIR / "default_vocab.yaml"
+# Default vocab resides under core/data; YAML is the canonical format.
+DEFAULT_VOCAB_PATH_YAML = MODULE_DIR / "data" / "default_vocab.yaml"
 
 
 @dataclass
 class LibraryConfig:
+    """Resolved library configuration state.
+
+    Attributes:
+        root: Absolute path to the library root.
+        name: Library display name.
+        description: Optional description from the manifest.
+        vocab: Merged vocabulary (default + custom).
+        vocab_path: Path to the custom vocab if present, else default vocab path.
+        history_path: Path to the `tag_history.json` file.
+        bib_path: Path to the library BibTeX file.
+    """
+
     root: Path
     name: str
     description: str
@@ -38,6 +52,7 @@ class LibraryConfig:
 
 
 def load_json(path: Path) -> dict:
+    """Load a JSON file, returning an empty dict if missing."""
     if not path.exists():
         return {}
     with open(path, "r", encoding="utf-8") as f:
@@ -45,7 +60,13 @@ def load_json(path: Path) -> dict:
 
 
 def merge_vocab(default: dict, custom: dict) -> dict:
-    """Merge custom vocab into default vocab."""
+    """Merge custom vocab into default vocab.
+
+    - Document_Types: union of lists
+    - Levels: union of lists
+    - Disciplines: custom overrides/extends defaults
+    - Keywords: union of lists per group
+    """
     merged = {}
     merged["Document_Types"] = sorted(
         set(default.get("Document_Types", []) + custom.get("Document_Types", []))
@@ -73,6 +94,7 @@ def merge_vocab(default: dict, custom: dict) -> dict:
 
 
 def load_toml(path: Path) -> dict:
+    """Load a TOML file, returning an empty dict if missing."""
     if not path.exists():
         return {}
     with open(path, "rb") as f:
@@ -80,6 +102,7 @@ def load_toml(path: Path) -> dict:
 
 
 def load_yaml(path: Path) -> dict:
+    """Load a YAML file, returning an empty dict if missing or PyYAML absent."""
     if not path.exists():
         return {}
     if yaml is None:
@@ -90,6 +113,13 @@ def load_yaml(path: Path) -> dict:
 
 
 def load_library_config(library_root: str) -> LibraryConfig:
+    """Load and resolve a library's configuration and vocabulary.
+
+    - Reads `borax-library.toml` (preferred) or legacy JSON manifest.
+    - Loads default vocab from `borax/core/data/default_vocab.yaml`.
+    - Loads custom vocab from the library if present (YAML or JSON).
+    - Merges vocabularies using `merge_vocab`.
+    """
     root = Path(library_root).expanduser().resolve()
     manifest_toml = root / "borax-library.toml"
     manifest_json = root / "borax-library.json"
@@ -101,8 +131,10 @@ def load_library_config(library_root: str) -> LibraryConfig:
         raise FileNotFoundError(
             f"No borax-library.toml or borax-library.json found in {root}"
         )
+
     name = manifest.get("name", root.name)
     description = manifest.get("description", "")
+
     # Resolve vocab file (prefer YAML; accept JSON)
     vocab_rel: Optional[str] = manifest.get("vocab")
     if not vocab_rel:
@@ -115,14 +147,10 @@ def load_library_config(library_root: str) -> LibraryConfig:
     history_rel = manifest.get("history", "tag_history.json")
     bib_rel = manifest.get("bib", "library.bib")
 
-    # Load default vocab (prefer YAML if present)
-    default_vocab_path = (
-        DEFAULT_VOCAB_PATH_YAML if DEFAULT_VOCAB_PATH_YAML.exists() else DEFAULT_VOCAB_PATH_JSON
-    )
-    if default_vocab_path.suffix.lower() in {".yaml", ".yml"}:
-        default_vocab = load_yaml(default_vocab_path)
-    else:
-        default_vocab = load_json(default_vocab_path)
+    # Load default vocab from core/data (YAML)
+    default_vocab = load_yaml(DEFAULT_VOCAB_PATH_YAML)
+
+    # Load custom vocab from library
     custom_vocab_path = root / vocab_rel
     if custom_vocab_path.suffix.lower() in {".yaml", ".yml"}:
         custom_vocab = load_yaml(custom_vocab_path)
@@ -135,7 +163,8 @@ def load_library_config(library_root: str) -> LibraryConfig:
         name=name,
         description=description,
         vocab=merged_vocab,
-        vocab_path=custom_vocab_path if custom_vocab else default_vocab_path,
+        vocab_path=custom_vocab_path if custom_vocab else DEFAULT_VOCAB_PATH_YAML,
         history_path=root / history_rel,
         bib_path=root / bib_rel,
     )
+

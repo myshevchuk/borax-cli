@@ -20,13 +20,19 @@ Project tree (core):
 borax-cli/
 ├── main.py                     # CLI dispatcher
 └── borax/
-    ├── tagging.py              # Tagging engine (discipline-agnostic)
-    ├── bibtex_exporter.py      # PDF metadata → BibTeX
-    ├── metadata_fetcher.py     # DOI / ISBN enrichment
-    ├── history_tracker.py      # Per-library checksum history
-    ├── utils.py                # ExifTool / checksum helpers
-    ├── library_config.py       # Manifest and vocab loading/merging
-    └── default_vocab.yaml      # Discipline-agnostic defaults
+    ├── core/
+    │   ├── __init__.py
+    │   ├── library_config.py   # Manifest and vocab loading/merging
+    │   ├── history_tracker.py  # Per-library checksum history
+    │   ├── init_library.py     # Library scaffolder
+    │   ├── utils.py            # ExifTool / checksum helpers
+    │   └── data/
+    │       └── default_vocab.yaml  # Discipline-agnostic defaults
+    ├── tagging/                # Tagging engine package
+    │   └── __init__.py
+    └── bibtex_exporter/        # PDF metadata → BibTeX
+        ├── __init__.py
+        └── metadata_fetcher.py # DOI / ISBN enrichment
 ```
 
 Libraries live outside the project. Each library root contains:
@@ -40,7 +46,7 @@ Libraries live outside the project. Each library root contains:
 └── PDFs...
 ```
 
-The manifest points Borax to the library-specific `vocab.yaml` (if any), and the paths for the history and BibTeX files. Library vocab (YAML) is merged with the default vocab at `borax/default_vocab.yaml` (JSON also supported).
+The manifest points Borax to the library-specific `vocab.yaml` (if any), and the paths for the history and BibTeX files. Library vocab (YAML) is merged with the default vocab at `borax/core/data/default_vocab.yaml`.
 
 ---
 

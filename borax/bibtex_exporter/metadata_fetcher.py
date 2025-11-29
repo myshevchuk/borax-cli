@@ -75,3 +75,4 @@ def fetch_from_isbn(isbn: str) -> dict:
         }
     except Exception:
         return {}
+

@@ -66,3 +66,4 @@ def exiftool_write_keywords(path, keywords, preserve_time=True):
         cmd.append("-preserve")
     cmd += ["-overwrite_original", path]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+

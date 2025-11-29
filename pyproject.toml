@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "borax-cli"
-version = "0.3.0"
+name = "borax"
+version = "0.4.0-3"
 description = "Borax — Book Organizer and Research Article arXiver"
 authors = ["Mykhailo Shevchuk <mail+dev@mshevchuk.com>"]
 license = "MIT"
@@ -22,7 +22,7 @@ poethepoet = "^0.25.0"
 reportlab = "^4.0"
 
 [tool.poetry.scripts]
-borax-cli = "borax.cli:main"
+borax = "borax.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.5.0"]

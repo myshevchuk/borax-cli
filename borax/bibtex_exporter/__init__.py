@@ -6,14 +6,16 @@ import re
 from pathlib import Path
 from datetime import datetime
 from .metadata_fetcher import fetch_from_doi, fetch_from_isbn
-from .utils import exiftool_read_json
+from borax.core.utils import exiftool_read_json
 
 
 def sanitize_bib_key(text: str) -> str:
+    """Sanitize text to form a simple BibTeX key (alnum only)."""
     return re.sub(r"[^a-zA-Z0-9]+", "", text)
 
 
 def extract_metadata_with_exif(filepath: Path) -> dict:
+    """Extract a set of known metadata fields from a PDF via ExifTool."""
     fields = [
         "-Title",
         "-Author",
@@ -32,6 +34,7 @@ def extract_metadata_with_exif(filepath: Path) -> dict:
 
 
 def get_meta_field(meta: dict, keys, default=""):
+    """Return the first present metadata value for the provided keys."""
     for k in keys:
         if k in meta:
             return meta[k]
@@ -39,6 +42,7 @@ def get_meta_field(meta: dict, keys, default=""):
 
 
 def enrich_metadata(meta: dict) -> dict:
+    """Optionally enrich parsed metadata using DOI or ISBN lookups."""
     doi = meta.get("PDF:DOI") or meta.get("XMP:Identifier") or ""
     isbn = meta.get("PDF:ISBN") or meta.get("Custom:ISBN") or ""
     extra = {}
@@ -53,6 +57,7 @@ def enrich_metadata(meta: dict) -> dict:
 
 
 def make_bibtex_entry(filepath: Path, meta: dict):
+    """Build a BibTeX entry string and return (key, entry)."""
     title = get_meta_field(meta, ["Title", "XMP:Title", "title"], filepath.stem)
     author = get_meta_field(
         meta, ["Author", "XMP:Creator", "DC:Creator", "author"], "Unknown"
@@ -102,6 +107,7 @@ def make_bibtex_entry(filepath: Path, meta: dict):
 
 
 def append_to_bib(bib_path: Path, filepath: Path, bib_entry: str) -> bool:
+    """Append the entry if the file path is not already present; return added."""
     bib_path.parent.mkdir(parents=True, exist_ok=True)
     if not bib_path.exists():
         bib_path.write_text("", encoding="utf-8")
@@ -114,6 +120,7 @@ def append_to_bib(bib_path: Path, filepath: Path, bib_entry: str) -> bool:
 
 
 def process_pdf(filepath: Path, bib_path: Path, enrich: bool = True):
+    """Process a single PDF into BibTeX, optionally enriching metadata."""
     meta = extract_metadata_with_exif(filepath)
     if enrich:
         meta = enrich_metadata(meta)
@@ -123,6 +130,7 @@ def process_pdf(filepath: Path, bib_path: Path, enrich: bool = True):
 
 
 def export_all_to_bib(library_root: Path, bib_path: Path) -> int:
+    """Walk library and append BibTeX entries for all PDFs; return count."""
     added = 0
     for dirpath, _, files in os.walk(library_root):
         for fname in files:
@@ -132,3 +140,4 @@ def export_all_to_bib(library_root: Path, bib_path: Path) -> int:
             if process_pdf(p, bib_path):
                 added += 1
     return added
+

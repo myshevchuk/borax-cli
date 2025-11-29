@@ -1,4 +1,4 @@
-from borax.library_config import merge_vocab
+from borax.core.library_config import merge_vocab
 
 
 def test_merge_vocab_unions_lists_and_merges_maps():

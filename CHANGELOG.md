@@ -8,19 +8,34 @@ Semantic Versioning 2.0.0.
 ## [Unreleased]
 
 ### Added
-- Support for TOML library manifests (`borax-library.toml`) and YAML
-  vocabularies (`vocab.yaml`) with JSON maintained for compatibility.
+- Split project into subpackages:
+  - `borax/core` (config, utils, history, init)
+  - `borax/tagging` (package)
+  - `borax/bibtex_exporter` (package)
+- Ship default vocabulary at `borax/core/data/default_vocab.yaml`.
 - Runtime dependency: `PyYAML` for YAML parsing.
 
 ### Changed
-- Loader now prefers TOML for manifests and YAML for vocab; falls back to
-  JSON when those files are not present.
-- Test fixtures converted to TOML/YAML (`tests/data/library`).
-- README updated to document TOML/YAML formats and Python 3.11+
-  recommendation (`tomllib`); note `tomli` for Python < 3.11.
- - Init command now generates `borax-library.toml` and `vocab.yaml` by
-   default (replacing prior JSON output).
- - Default vocabulary is now shipped as YAML (`borax/default_vocab.yaml`).
+- Public API preserved via re-exports: `from borax import tagging,`
+  `bibtex_exporter, history_tracker` still works.
+- CLI updated to import config/init from `borax.core`.
+- Default vocab is loaded only from `borax/core/data/default_vocab.yaml`.
+- Test fixtures remain TOML/YAML; unit import adjusted to
+  `borax.core.library_config`.
+- README and AGENTS updated to reflect new layout and default vocab path.
+- AGENTS: clarified commit message rules — do not include the literal words
+  "Subject" or "Body" in suggested commit messages.
+
+### Removed
+- Legacy modules after package split:
+  - `borax/tagging.py`
+  - `borax/bibtex_exporter.py`
+  - `borax/metadata_fetcher.py`
+  - `borax/utils.py`
+  - `borax/history_tracker.py`
+  - `borax/init_library.py`
+  - `borax/library_config.py`
+  - `borax/default_vocab.yaml` (moved under `borax/core/data/`)
 
 ## [0.3.1] - 2025-11-19
 

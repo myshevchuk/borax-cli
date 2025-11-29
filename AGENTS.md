@@ -22,13 +22,19 @@ Borax is a discipline-agnostic PDF library manager that:
 borax-cli/
 ├── main.py                     # CLI dispatcher
 └── borax/
-    ├── tagging.py              # Tagging engine (discipline-agnostic)
-    ├── bibtex_exporter.py      # PDF metadata → BibTeX
-    ├── metadata_fetcher.py     # DOI / ISBN enrichment
-    ├── history_tracker.py      # Per-library checksum history
-    ├── utils.py                # ExifTool / checksum helpers
-    ├── library_config.py       # Manifest and vocab loading/merging
-    └── default_vocab.yaml      # Discipline-agnostic defaults
+    ├── core/
+    │   ├── __init__.py
+    │   ├── library_config.py   # Manifest and vocab loading/merging
+    │   ├── history_tracker.py  # Per-library checksum history
+    │   ├── init_library.py     # Library scaffolder
+    │   ├── utils.py            # ExifTool / checksum helpers
+    │   └── data/
+    │       └── default_vocab.yaml  # Discipline-agnostic defaults
+    ├── tagging/                # Tagging engine package
+    │   └── __init__.py
+    └── bibtex_exporter/        # PDF metadata → BibTeX
+        ├── __init__.py
+        └── metadata_fetcher.py # DOI / ISBN enrichment
 ```
 
 ### Libraries (external to project)
@@ -62,12 +68,12 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - PDFs themselves
 
 2. **Default vocabulary is discipline-agnostic.**
-   - Defined in `borax/default_vocab.yaml`.
+   - Defined in `borax/core/data/default_vocab.yaml`.
    - Provides generic disciplines, document types, levels, and keyword groups.
    - Is always present even if a library has no custom vocab.
 
 3. **Library vocab is merged with default vocab.**
-   Implemented in `borax/library_config.py` via `merge_vocab(default, custom)`:
+   Implemented in `borax/core/library_config.py` via `merge_vocab(default, custom)`:
 
    - `Document_Types`: union of default + custom lists.
    - `Levels`: union of default + custom lists.
@@ -75,7 +81,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - `Keywords`: union of lists per group.
 
 4. **Tagging uses three information sources.**
-   Implemented in `borax/tagging.py`:
+   Implemented in `borax/tagging/__init__.py`:
 
    - **Folder structure**: relative path from library root ⇒ fuzzy-matched to discipline/subfield names.
    - **Finder tags (macOS-only)**: read via `mdls -name kMDItemUserTags`; validated against `Document_Types` and `Levels`.
@@ -84,7 +90,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    Tags are written to PDF metadata using ExifTool’s `Keywords` field and `-preserve` to keep timestamps.
 
 5. **Bibliographic metadata is extracted and enriched.**
-   Implemented in `borax/bibtex_exporter.py` and `borax/metadata_fetcher.py`:
+   Implemented in `borax/bibtex_exporter/__init__.py` and `borax/bibtex_exporter/metadata_fetcher.py`:
 
    - ExifTool reads title, author, subject, year-like fields, publisher-like fields, ISBN, DOI, etc.
    - If a DOI is found → CrossRef is queried for enrichment.
@@ -93,7 +99,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - Duplicate entries are avoided by checking for the file path in the BibTeX file.
 
 6. **History tracking prevents redundant work.**
-   Implemented in `borax/history_tracker.py`:
+   Implemented in `borax/core/history_tracker.py`:
 
    - Library-specific `tag_history.json` stores:
      - original/modified checksums,
@@ -110,7 +116,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - `bibtex <library>`
    - `history <library>`
 
-   Each `<library>` must point to a directory containing `borax-library.json`.
+   Each `<library>` must point to a directory containing `borax-library.toml`.
 
 ---
 
@@ -154,7 +160,7 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
    - When adding or changing tests or fixtures, update `tests/README.md` to reflect structure, new cases, and any new tooling/markers.
 
 9. **Commit message conventions.**
-   - Prepare commit messages ready to copy/paste — do not include literal headings like "Title" or "Body".
+   - Prepare commit messages ready to copy/paste — do not include literal headings like "Subject" or "Body".
    - Keep the first line (subject) concise, imperative, and no more than 50
      characters.
    - Wrap body lines at 72 characters (the body may span multiple wrapped lines).

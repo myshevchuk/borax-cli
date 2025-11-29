@@ -6,8 +6,8 @@ an installed `borax-cli` command without reorganizing files.
 """
 
 import argparse
-from borax.library_config import load_library_config
-from borax.init_library import run_init
+from borax.core.library_config import load_library_config
+from borax.core.init_library import run_init
 from borax import tagging, bibtex_exporter, history_tracker
 
 
