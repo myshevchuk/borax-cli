@@ -13,7 +13,8 @@ Semantic Versioning 2.0.0.
   migration notes) and commit message wording (avoid the words
   "Subject"/"Body").
  - AGENTS: add branch policy for code phrases — on non-main branches, do not
-   change versions or prerelease numbers; update only the Unreleased section.
+   change versions or prerelease numbers; update only the Unreleased section; and
+   explicitly check the current Git branch before executing code phrases.
 
 ## [0.4.0] - 2025-11-29
 

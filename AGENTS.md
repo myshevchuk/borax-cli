@@ -215,6 +215,9 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
          "Body"), summarizing the version bump and changes included.
 
 14. **Branch policy for code phrases**
+    - Always check the current Git branch before executing any code phrase
+      (e.g., run `git rev-parse --abbrev-ref HEAD`). If the branch is not
+      `main`, apply the non-version-changing rules below.
     - When working on any branch other than `main`, code phrases must not
       alter the version (major/minor/patch) nor the prerelease number (`-N`).
       Apply the following adjustments:
