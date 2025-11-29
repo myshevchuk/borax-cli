@@ -15,6 +15,8 @@ Semantic Versioning 2.0.0.
  - AGENTS: add branch policy for code phrases — on non-main branches, do not
    change versions or prerelease numbers; update only the Unreleased section; and
    explicitly check the current Git branch before executing code phrases.
+ - AGENTS: commit messages must describe only staged changes; do not source
+   content from the working tree or prior commits.
 
 ## [0.4.0] - 2025-11-29
 

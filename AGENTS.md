@@ -170,6 +170,8 @@ The manifest (`borax-library.toml`, or legacy `borax-library.json`) tells Borax 
      - This is a long bullet that wraps to the next line and the wrapped
        line is indented by two spaces.
    - When updating process or policy (e.g., this AGENTS.md), mention that change explicitly in the commit body.
+   - Describe only staged changes: the commit message must be sourced solely
+     from what is currently staged, not from working tree or prior commits.
 
 10. **Pre-1.0.0 compatibility guidance.**
     - Do not suggest or add backward-compatibility shims, adapters, or
